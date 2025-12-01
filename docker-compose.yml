@@ -1,0 +1,121 @@
+version: '3.8'
+
+services:
+  # ============================================
+  # Banco de Dados MySQL
+  # ============================================
+  db:
+    image: mysql:8.0
+    container_name: corretordasmansoes-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-corretordasmansoes}
+      MYSQL_USER: ${MYSQL_USER:-corretor}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-corretorpassword}
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./drizzle/migrations:/docker-entrypoint-initdb.d:ro
+    networks:
+      - corretor-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-rootpassword}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # ============================================
+  # Aplicação Web (Frontend + Backend)
+  # ============================================
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: corretordasmansoes-app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    environment:
+      # Configurações gerais
+      NODE_ENV: production
+      PORT: 3000
+      
+      # Banco de dados
+      DATABASE_URL: mysql://${MYSQL_USER:-corretor}:${MYSQL_PASSWORD:-corretorpassword}@db:3306/${MYSQL_DATABASE:-corretordasmansoes}
+      
+      # Autenticação JWT
+      JWT_SECRET: ${JWT_SECRET}
+      
+      # OAuth Manus
+      VITE_APP_ID: ${VITE_APP_ID}
+      OAUTH_SERVER_URL: ${OAUTH_SERVER_URL}
+      VITE_OAUTH_PORTAL_URL: ${VITE_OAUTH_PORTAL_URL}
+      
+      # Owner Info
+      OWNER_OPEN_ID: ${OWNER_OPEN_ID}
+      OWNER_NAME: ${OWNER_NAME}
+      
+      # Manus Forge API (Backend)
+      BUILT_IN_FORGE_API_URL: ${BUILT_IN_FORGE_API_URL}
+      BUILT_IN_FORGE_API_KEY: ${BUILT_IN_FORGE_API_KEY}
+      
+      # Manus Forge API (Frontend)
+      VITE_FRONTEND_FORGE_API_URL: ${VITE_FRONTEND_FORGE_API_URL}
+      VITE_FRONTEND_FORGE_API_KEY: ${VITE_FRONTEND_FORGE_API_KEY}
+      
+      # Analytics
+      VITE_ANALYTICS_ENDPOINT: ${VITE_ANALYTICS_ENDPOINT}
+      VITE_ANALYTICS_WEBSITE_ID: ${VITE_ANALYTICS_WEBSITE_ID}
+      
+      # App Info
+      VITE_APP_TITLE: ${VITE_APP_TITLE:-Corretor das Mansões - Hernani Muniz}
+      VITE_APP_LOGO: ${VITE_APP_LOGO}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - corretor-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ============================================
+  # phpMyAdmin (Opcional - apenas para desenvolvimento)
+  # ============================================
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: corretordasmansoes-phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "${PHPMYADMIN_PORT:-8080}:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: ${MYSQL_USER:-corretor}
+      PMA_PASSWORD: ${MYSQL_PASSWORD:-corretorpassword}
+    depends_on:
+      - db
+    networks:
+      - corretor-network
+    profiles:
+      - dev
+
+# ============================================
+# Volumes
+# ============================================
+volumes:
+  mysql_data:
+    driver: local
+
+# ============================================
+# Networks
+# ============================================
+networks:
+  corretor-network:
+    driver: bridge
