@@ -1,90 +1,89 @@
 # ============================================
-# STAGE 1: Build do Frontend (Client)
+# Dockerfile Multi-stage - CasaDF Sistema
 # ============================================
-FROM node:22-alpine AS client-builder
+
+# ============================================
+# Stage 1: Base Dependencies
+# ============================================
+FROM node:22-alpine AS base
+
+# Instalar dependências do sistema
+RUN apk add --no-cache libc6-compat
+
+# Habilitar corepack para pnpm
+RUN corepack enable && corepack prepare pnpm@9.15.0 --activate
 
 WORKDIR /app
 
-# Copiar package.json e lock files
-COPY package.json pnpm-lock.yaml ./
+# ============================================
+# Stage 2: Dependencies Installation
+# ============================================
+FROM base AS deps
 
-# Instalar pnpm e dependências
-RUN npm install -g pnpm@latest && \
-    pnpm install --frozen-lockfile
+# Copiar apenas arquivos de dependências
+COPY package.json pnpm-lock.yaml* ./
 
-# Copiar código fonte do cliente
-COPY client ./client
-COPY shared ./shared
-COPY tsconfig.json ./
+# Instalar dependências de produção e desenvolvimento
+RUN pnpm install --frozen-lockfile
 
-# Build do frontend
+# ============================================
+# Stage 3: Builder (Client + Server)
+# ============================================
+FROM base AS builder
+
+WORKDIR /app
+
+# Copiar dependências do stage anterior
+COPY --from=deps /app/node_modules ./node_modules
+
+# Copiar TODOS os arquivos do projeto (incluindo pastas irmãs)
+COPY . .
+
+# Build arguments para variáveis de ambiente de build
+ARG VITE_APP_ID
+ARG OAUTH_SERVER_URL
+
+ENV VITE_APP_ID=${VITE_APP_ID}
+ENV OAUTH_SERVER_URL=${OAUTH_SERVER_URL}
+
+# Build do cliente (React + Vite)
 RUN pnpm run build:client
 
-# ============================================
-# STAGE 2: Build do Backend (Server)
-# ============================================
-FROM node:22-alpine AS server-builder
-
-WORKDIR /app
-
-# Copiar package.json e lock files
-COPY package.json pnpm-lock.yaml ./
-
-# Instalar pnpm e dependências
-RUN npm install -g pnpm@latest && \
-    pnpm install --frozen-lockfile
-
-# Copiar código fonte do servidor
-COPY server ./server
-COPY drizzle ./drizzle
-COPY shared ./shared
-COPY storage ./storage
-COPY tsconfig.json ./
-
-# Build do backend
+# Build do servidor (TypeScript)
 RUN pnpm run build:server
 
 # ============================================
-# STAGE 3: Imagem Final de Produção
+# Stage 4: Production Runner
 # ============================================
-FROM node:22-alpine
+FROM node:22-alpine AS runner
 
 WORKDIR /app
 
-# Instalar apenas dependências de produção
-RUN npm install -g pnpm@latest
+# Criar usuário não-root
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nodejs
 
-# Copiar package.json e instalar apenas prod dependencies
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --prod --frozen-lockfile
+# Copiar apenas o necessário para produção
+COPY --from=builder --chown=nodejs:nodejs /app/package.json ./
+COPY --from=builder --chown=nodejs:nodejs /app/dist ./dist
+COPY --from=builder --chown=nodejs:nodejs /app/node_modules ./node_modules
 
-# Copiar builds do frontend e backend
-COPY --from=client-builder /app/dist/client ./dist/client
-COPY --from=server-builder /app/dist/server ./dist/server
+# Copiar pastas de schema e migrations do banco
+COPY --from=builder --chown=nodejs:nodejs /app/drizzle ./drizzle
 
-# Copiar arquivos necessários
-COPY drizzle ./drizzle
-COPY shared ./shared
-COPY storage ./storage
-COPY server/_core ./server/_core
-
-# Criar usuário não-root para segurança
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001 && \
-    chown -R nodejs:nodejs /app
-
+# Definir usuário
 USER nodejs
 
 # Expor porta
 EXPOSE 3000
 
-# Variáveis de ambiente padrão
-ENV NODE_ENV=production \
-    PORT=3000
+# Variáveis de ambiente de runtime
+ENV NODE_ENV=production
+ENV PORT=3000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD node -e "require('http').get('http://localhost:3000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+  CMD node -e "require('http').get('http://localhost:3000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
 
 # Comando de inicialização
-CMD ["node", "dist/server/index.js"]
+CMD ["node", "dist/index.js"]
