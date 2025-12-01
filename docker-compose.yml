@@ -1,110 +1,112 @@
-version: '3.8'
+version: '3.9'
 
 services:
   # ============================================
-  # Banco de Dados MySQL
+  # Banco de Dados MySQL 8
   # ============================================
   db:
     image: mysql:8.0
-    container_name: casadf-sistema-db
+    container_name: casadf_db
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-casadf}
-      MYSQL_USER: ${MYSQL_USER:-casadf}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-casadfpassword}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "${MYSQL_PORT:-3306}:3306"
+      - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./drizzle/migrations:/docker-entrypoint-initdb.d:ro
+      - ./init-db:/docker-entrypoint-initdb.d
     networks:
-      - casadf-network
+      - casadf_network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-rootpassword}"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 30s
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
   # ============================================
-  # Aplicação Web (Frontend + Backend)
+  # Aplicação CasaDF (Node.js)
   # ============================================
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: casadf-sistema-app
+      args:
+        VITE_APP_ID: ${VITE_APP_ID}
+        OAUTH_SERVER_URL: ${OAUTH_SERVER_URL}
+    container_name: casadf_app
     restart: unless-stopped
     ports:
-      - "${APP_PORT:-3000}:3000"
+      - "3000:3000"
     environment:
-      # Configurações gerais
+      # Node
       NODE_ENV: production
       PORT: 3000
       
-      # Banco de dados
-      DATABASE_URL: mysql://${MYSQL_USER:-casadf}:${MYSQL_PASSWORD:-casadfpassword}@db:3306/${MYSQL_DATABASE:-casadf}
+      # Database
+      DATABASE_URL: mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DATABASE}
       
-      # Autenticação JWT
+      # Autenticação
       JWT_SECRET: ${JWT_SECRET}
       
-      # OAuth Manus
+      # Manus OAuth
       VITE_APP_ID: ${VITE_APP_ID}
       OAUTH_SERVER_URL: ${OAUTH_SERVER_URL}
-      VITE_OAUTH_PORTAL_URL: ${VITE_OAUTH_PORTAL_URL}
       
-      # Owner Info
-      OWNER_OPEN_ID: ${OWNER_OPEN_ID}
-      OWNER_NAME: ${OWNER_NAME}
+      # AWS S3
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      AWS_S3_BUCKET: ${AWS_S3_BUCKET}
       
-      # Manus Forge API (Backend)
-      BUILT_IN_FORGE_API_URL: ${BUILT_IN_FORGE_API_URL}
-      BUILT_IN_FORGE_API_KEY: ${BUILT_IN_FORGE_API_KEY}
+      # N8N Webhooks
+      N8N_WEBHOOK_URL: ${N8N_WEBHOOK_URL:-}
       
-      # Manus Forge API (Frontend)
-      VITE_FRONTEND_FORGE_API_URL: ${VITE_FRONTEND_FORGE_API_URL}
-      VITE_FRONTEND_FORGE_API_KEY: ${VITE_FRONTEND_FORGE_API_KEY}
+      # Google Maps
+      VITE_GOOGLE_MAPS_API_KEY: ${VITE_GOOGLE_MAPS_API_KEY:-}
       
-      # Analytics
-      VITE_ANALYTICS_ENDPOINT: ${VITE_ANALYTICS_ENDPOINT}
-      VITE_ANALYTICS_WEBSITE_ID: ${VITE_ANALYTICS_WEBSITE_ID}
-      
-      # App Info
-      VITE_APP_TITLE: ${VITE_APP_TITLE:-CasaDF - Sistema Imobiliário}
-      VITE_APP_LOGO: ${VITE_APP_LOGO}
     depends_on:
       db:
         condition: service_healthy
     networks:
-      - casadf-network
+      - casadf_network
+    volumes:
+      - ./logs:/app/logs
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
 
   # ============================================
-  # phpMyAdmin (Opcional - apenas para desenvolvimento)
+  # Nginx Reverse Proxy (Opcional)
   # ============================================
-  phpmyadmin:
-    image: phpmyadmin:latest
-    container_name: casadf-sistema-phpmyadmin
+  nginx:
+    image: nginx:alpine
+    container_name: casadf_nginx
     restart: unless-stopped
     ports:
-      - "${PHPMYADMIN_PORT:-8080}:80"
-    environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
-      PMA_USER: ${MYSQL_USER:-corretor}
-      PMA_PASSWORD: ${MYSQL_PASSWORD:-corretorpassword}
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
     depends_on:
-      - db
+      - app
     networks:
-      - casadf-network
-    profiles:
-      - dev
+      - casadf_network
+
+# ============================================
+# Networks
+# ============================================
+networks:
+  casadf_network:
+    driver: bridge
 
 # ============================================
 # Volumes
@@ -112,10 +114,3 @@ services:
 volumes:
   mysql_data:
     driver: local
-
-# ============================================
-# Networks
-# ============================================
-networks:
-  casadf-network:
-    driver: bridge
