@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # ============================================
-# Script de Deploy - Corretor das Mansões
+# Script de Deploy - CasaDF Sistema Imobiliário
 # ============================================
 
 set -e  # Exit on error
 
-echo "🚀 Iniciando deploy do projeto..."
+echo "🏠 CasaDF - Iniciando deploy do sistema..."
 
 # Cores para output
 GREEN='\033[0;32m'
@@ -41,7 +41,7 @@ docker-compose down
 # Remover imagens antigas (opcional - descomente se necessário)
 # echo -e "${BLUE}🗑️  Removendo imagens antigas...${NC}"
 # docker-compose rm -f
-# docker rmi corretordasmansoes-app:latest || true
+# docker rmi casadf-sistema-app:latest || true
 
 # Build das imagens
 echo -e "${BLUE}🏗️  Buildando imagens Docker...${NC}"

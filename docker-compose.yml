@@ -6,20 +6,20 @@ services:
   # ============================================
   db:
     image: mysql:8.0
-    container_name: corretordasmansoes-db
+    container_name: casadf-sistema-db
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-corretordasmansoes}
-      MYSQL_USER: ${MYSQL_USER:-corretor}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-corretorpassword}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-casadf}
+      MYSQL_USER: ${MYSQL_USER:-casadf}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-casadfpassword}
     ports:
       - "${MYSQL_PORT:-3306}:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./drizzle/migrations:/docker-entrypoint-initdb.d:ro
     networks:
-      - corretor-network
+      - casadf-network
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-rootpassword}"]
       interval: 10s
@@ -34,7 +34,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: corretordasmansoes-app
+    container_name: casadf-sistema-app
     restart: unless-stopped
     ports:
       - "${APP_PORT:-3000}:3000"
@@ -44,7 +44,7 @@ services:
       PORT: 3000
       
       # Banco de dados
-      DATABASE_URL: mysql://${MYSQL_USER:-corretor}:${MYSQL_PASSWORD:-corretorpassword}@db:3306/${MYSQL_DATABASE:-corretordasmansoes}
+      DATABASE_URL: mysql://${MYSQL_USER:-casadf}:${MYSQL_PASSWORD:-casadfpassword}@db:3306/${MYSQL_DATABASE:-casadf}
       
       # Autenticação JWT
       JWT_SECRET: ${JWT_SECRET}
@@ -71,13 +71,13 @@ services:
       VITE_ANALYTICS_WEBSITE_ID: ${VITE_ANALYTICS_WEBSITE_ID}
       
       # App Info
-      VITE_APP_TITLE: ${VITE_APP_TITLE:-Corretor das Mansões - Hernani Muniz}
+      VITE_APP_TITLE: ${VITE_APP_TITLE:-CasaDF - Sistema Imobiliário}
       VITE_APP_LOGO: ${VITE_APP_LOGO}
     depends_on:
       db:
         condition: service_healthy
     networks:
-      - corretor-network
+      - casadf-network
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
       interval: 30s
@@ -90,7 +90,7 @@ services:
   # ============================================
   phpmyadmin:
     image: phpmyadmin:latest
-    container_name: corretordasmansoes-phpmyadmin
+    container_name: casadf-sistema-phpmyadmin
     restart: unless-stopped
     ports:
       - "${PHPMYADMIN_PORT:-8080}:80"
@@ -102,7 +102,7 @@ services:
     depends_on:
       - db
     networks:
-      - corretor-network
+      - casadf-network
     profiles:
       - dev
 
@@ -117,5 +117,5 @@ volumes:
 # Networks
 # ============================================
 networks:
-  corretor-network:
+  casadf-network:
     driver: bridge

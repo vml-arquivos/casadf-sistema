@@ -105,3 +105,13 @@ temp/
 *.db
 *.sqlite
 *.sqlite3
+
+# Manus
+.manus/
+
+# Storage (uploads locais)
+storage/uploads/*
+!storage/uploads/.gitkeep
+
+# Docker override
+docker-compose.override.yml
