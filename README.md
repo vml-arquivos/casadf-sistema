@@ -1,6 +1,6 @@
-# 🏠 CasaDF - Sistema Imobiliário Completo
+# 🏰 Corretor das Mansões - Hernani Muniz
 
-Sistema completo de gestão imobiliária em Brasília com CRM integrado, automação via WhatsApp e gestão de imóveis.
+Sistema completo de consultoria imobiliária de luxo em Brasília com CRM integrado, automação via WhatsApp e gestão de imóveis.
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Node](https://img.shields.io/badge/node-22.x-green.svg)
@@ -83,7 +83,7 @@ Sistema completo de gestão imobiliária em Brasília com CRM integrado, automa�
 ## 📁 Estrutura do Projeto
 
 ```
-casadf-sistema/
+corretordasmansoes/
 ├── client/                    # Frontend React
 │   ├── public/               # Assets estáticos
 │   ├── src/
@@ -142,8 +142,8 @@ casadf-sistema/
 
 1. **Clone o repositório:**
 ```bash
-git clone https://github.com/vml-arquivos/casadf-sistema.git
-cd casadf-sistema
+git clone https://github.com/seu-usuario/corretordasmansoes.git
+cd corretordasmansoes
 ```
 
 2. **Instale as dependências:**
@@ -363,16 +363,17 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 👤 Autor
 
-**CasaDF Imóveis**
-- Email: contato@casadf.com.br
-- Telefone: (61) 0000-0000
-- Website: https://casadf.com.br
+**Hernani Muniz**
+- CRECI: 17921-DF
+- Email: ernanisimiao@hotmail.com
+- Telefone: (61) 3254-4464
+- Instagram: [@ernani.nunes](https://instagram.com/ernani.nunes)
 
 ## 🆘 Suporte
 
-- **Issues:** https://github.com/vml-arquivos/casadf-sistema/issues
-- **Email:** suporte@casadf.com.br
-- **Documentação:** Veja arquivos .md no repositório
+- **Issues:** https://github.com/seu-usuario/corretordasmansoes/issues
+- **Email:** suporte@corretordasmansoes.com.br
+- **Documentação:** https://docs.corretordasmansoes.com.br
 
 ## 📚 Documentação Adicional
 

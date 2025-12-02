@@ -854,7 +854,7 @@ const integrationRouter = router({
             state: p.state,
             mainImage: p.mainImage,
             referenceCode: p.referenceCode,
-            url: `https://corretordasmansoes.com/imovel/${p.id}`,
+            url: `${process.env.SITE_URL || 'http://localhost:3000'}/imovel/${p.id}`,
           })),
         };
       } catch (error: any) {
