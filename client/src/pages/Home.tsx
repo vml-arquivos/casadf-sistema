@@ -539,7 +539,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5" />
               <img
                 src="/ernani-nunes-photo.jpg"
-                alt="Ernani Nunes - O Corretor das Mansões"
+                alt="CasaDF - Imóveis em Brasília"
                 className="w-full h-full object-cover"
               />
             </div>

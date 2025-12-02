@@ -1,17 +1,24 @@
-# 🏰 Corretor das Mansões - Hernani Muniz
+# 🏠 CasaDF - Sistema de Gestão Imobiliária
 
-Sistema completo de consultoria imobiliária de luxo em Brasília com CRM integrado, automação via WhatsApp e gestão de imóveis.
+Sistema completo de CRM imobiliário com site público integrado, desenvolvido para a CasaDF em Brasília.
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Node](https://img.shields.io/badge/node-22.x-green.svg)
-![React](https://img.shields.io/badge/react-19.x-blue.svg)
+![React](https://img.shields.io/badge/react-18.x-blue.svg)
 ![TypeScript](https://img.shields.io/badge/typescript-5.x-blue.svg)
+![PostgreSQL](https://img.shields.io/badge/postgresql-16-blue.svg)
+
+## 🚀 Deploy Rápido
+
+**Para fazer deploy hoje mesmo**, consulte: **[DEPLOY_HOJE.md](./DEPLOY_HOJE.md)**
+
+---
 
 ## ✨ Funcionalidades
 
 ### 🏠 Gestão de Imóveis
-- Cadastro completo de imóveis (casas, apartamentos, coberturas, terrenos)
-- Upload múltiplo de fotos com integração S3
+- Cadastro completo de imóveis (casas, apartamentos, coberturas, terrenos, comerciais, rurais)
+- Upload múltiplo de fotos com integração S3 ou storage local
 - Filtros avançados (tipo, bairro, preço, características)
 - Página de detalhes com galeria e localização no mapa
 - Sistema de destaque para imóveis premium
@@ -25,10 +32,11 @@ Sistema completo de consultoria imobiliária de luxo em Brasília com CRM integr
 - Sistema de follow-up automático
 - Dashboard com métricas e analytics
 - Segmentação por perfil de cliente
+- Gestão de proprietários
 
-### 💬 Automação WhatsApp
+### 💬 Automação WhatsApp (Opcional)
 - Integração com N8N para automação
-- Atendente IA (Lívia 3.0)
+- Atendente IA via Google Gemini
 - Histórico de mensagens no CRM
 - Webhooks para receber e enviar mensagens
 - Agendamento automático de visitas
@@ -46,26 +54,29 @@ Sistema completo de consultoria imobiliária de luxo em Brasília com CRM integr
 - Métricas de conversão
 - Análise de origem de leads
 - Relatórios de performance
-- Integração com Manus Analytics
+- Integração com Umami Analytics
 
-## 🚀 Tecnologias
+---
+
+## 🛠️ Tecnologias
 
 ### Frontend
-- **React 19** - Interface moderna e responsiva
+- **React 18** - Interface moderna e responsiva
 - **Tailwind CSS 4** - Estilização com design system personalizado
 - **shadcn/ui** - Componentes de UI de alta qualidade
 - **Wouter** - Roteamento leve e eficiente
 - **tRPC Client** - Type-safe API calls
+- **Tanstack Query** - Data fetching e cache
 
 ### Backend
 - **Node.js 22** - Runtime JavaScript
 - **Express 4** - Framework web
 - **tRPC 11** - Type-safe API com contratos end-to-end
-- **Drizzle ORM** - ORM TypeScript-first para MySQL
+- **Drizzle ORM** - ORM TypeScript-first para PostgreSQL
 - **Superjson** - Serialização avançada (Date, Map, Set)
 
 ### Banco de Dados
-- **MySQL 8** / **TiDB** - Banco de dados relacional
+- **PostgreSQL 16** - Banco de dados relacional
 - **Drizzle Kit** - Migrations e schema management
 
 ### Autenticação
@@ -73,17 +84,21 @@ Sistema completo de consultoria imobiliária de luxo em Brasília com CRM integr
 - **JWT** - Tokens seguros para sessões
 
 ### Storage
-- **AWS S3** - Armazenamento de imagens de imóveis
+- **AWS S3** (opcional) - Armazenamento de imagens de imóveis
+- **Local Storage** - Alternativa para desenvolvimento
 
 ### Integrações
-- **N8N Webhooks** - Automação de workflows
-- **WhatsApp Business API** - Comunicação com clientes
+- **N8N Webhooks** (opcional) - Automação de workflows
+- **WhatsApp Business API** (opcional) - Comunicação com clientes
 - **Google Maps API** - Localização de imóveis
+- **Google Gemini** (opcional) - IA para atendimento
+
+---
 
 ## 📁 Estrutura do Projeto
 
 ```
-corretordasmansoes/
+casadf-sistema/
 ├── client/                    # Frontend React
 │   ├── public/               # Assets estáticos
 │   ├── src/
@@ -98,8 +113,7 @@ corretordasmansoes/
 │   │   │   ├── PropertyDetail.tsx
 │   │   │   ├── Blog.tsx
 │   │   │   └── admin/       # Páginas administrativas
-│   │   ├── contexts/        # React contexts
-│   │   ├── hooks/           # Custom hooks
+│   │   ├── _core/           # Hooks e contextos
 │   │   ├── lib/             # Utilitários
 │   │   │   └── trpc.ts      # Cliente tRPC
 │   │   ├── App.tsx          # Rotas e layout
@@ -116,62 +130,122 @@ corretordasmansoes/
 │   └── index.ts             # Entry point
 ├── drizzle/                 # Banco de dados
 │   ├── schema.ts            # Schema das tabelas
+│   ├── relations.ts         # Relações
 │   └── migrations/          # Migrations SQL
 ├── shared/                  # Código compartilhado
 │   ├── types.ts             # Tipos TypeScript
 │   └── constants.ts         # Constantes
-├── storage/                 # Helpers S3
+├── storage/                 # Upload de arquivos
 │   └── index.ts
+├── docs/                    # Documentação
 ├── Dockerfile               # Build Docker
 ├── docker-compose.yml       # Orquestração
 ├── build.sh                 # Script de build
 ├── deploy.sh                # Script de deploy
+├── clean.sh                 # Script de limpeza
 ├── package.json             # Dependências
 └── tsconfig.json            # Config TypeScript
 ```
 
-## 🛠️ Instalação
+---
+
+## ⚡ Início Rápido
 
 ### Pré-requisitos
 
-- Node.js 22+
-- pnpm 9+
-- MySQL 8+ (ou Docker)
+- **Docker 24+** e Docker Compose (recomendado)
+- Ou **Node.js 22+** e **PostgreSQL 16+**
 
-### Desenvolvimento Local
+### Opção 1: Docker (Recomendado)
 
-1. **Clone o repositório:**
 ```bash
-git clone https://github.com/seu-usuario/corretordasmansoes.git
-cd corretordasmansoes
-```
+# 1. Clonar repositório
+git clone https://github.com/vml-arquivos/casadf-sistema.git
+cd casadf-sistema
 
-2. **Instale as dependências:**
-```bash
-pnpm install
-```
-
-3. **Configure as variáveis de ambiente:**
-```bash
+# 2. Configurar variáveis de ambiente
 cp .env.example .env
-nano .env  # Configure suas variáveis
+nano .env  # Configure suas credenciais
+
+# 3. Iniciar com Docker
+docker compose up -d --build
+
+# 4. Aplicar migrations
+docker compose exec app pnpm db:push
+
+# 5. Acessar
+# http://localhost:3000
 ```
 
-Veja [ENV_VARIABLES.md](./ENV_VARIABLES.md) para lista completa de variáveis.
+### Opção 2: Desenvolvimento Local
 
-4. **Execute as migrations:**
 ```bash
+# 1. Clonar e instalar
+git clone https://github.com/vml-arquivos/casadf-sistema.git
+cd casadf-sistema
+pnpm install
+
+# 2. Subir banco de dados
+docker compose up -d db
+
+# 3. Configurar .env
+cp .env.example .env
+nano .env
+
+# 4. Aplicar migrations
 pnpm db:push
-```
 
-5. **Inicie o servidor de desenvolvimento:**
-```bash
+# 5. Iniciar dev server
 pnpm dev
+
+# 6. Acessar
+# http://localhost:3000
 ```
 
-6. **Acesse a aplicação:**
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:3000/api
+---
+
+## 📚 Documentação
+
+### Guias de Deploy
+- **[Deploy Rápido](./DEPLOY_HOJE.md)** - Guia para deploy em produção (10 minutos)
+- [Deploy Completo](./docs/DEPLOY.md) - Guia detalhado com todas as opções
+- [Docker Deploy](./docs/DOCKER_DEPLOY.md) - Deploy usando Docker
+- [Google Cloud](./docs/GOOGLE_CLOUD_DEPLOY.md) - Deploy no Google Cloud
+
+### Configuração
+- [Variáveis de Ambiente](./docs/ENV_VARIABLES.md) - Todas as variáveis disponíveis
+- [Setup de Ambiente](./docs/ENV_SETUP.md) - Como configurar o ambiente
+
+### Desenvolvimento
+- [Estrutura do Projeto](./docs/PROJECT_STRUCTURE.md) - Organização dos arquivos
+- [API Documentation](./docs/API_DOCUMENTATION.md) - Documentação da API tRPC
+
+---
+
+## 🔧 Scripts Disponíveis
+
+```bash
+# Desenvolvimento
+pnpm dev              # Iniciar dev server (frontend + backend)
+pnpm build            # Build para produção
+pnpm start            # Iniciar produção
+
+# Banco de dados
+pnpm db:generate      # Gerar migrations
+pnpm db:push          # Aplicar migrations
+pnpm db:studio        # Abrir Drizzle Studio
+
+# Qualidade de código
+pnpm check            # Type checking
+pnpm format           # Formatar código
+pnpm test             # Executar testes
+
+# Utilitários
+./clean.sh            # Limpar builds e cache
+./deploy.sh           # Deploy automatizado
+```
+
+---
 
 ## 🐳 Deploy com Docker
 
@@ -190,66 +264,18 @@ nano .env
 
 ```bash
 # Build e start
-docker-compose up -d
+docker compose up -d --build
 
 # Ver logs
-docker-compose logs -f
+docker compose logs -f
 
 # Parar
-docker-compose down
+docker compose down
 ```
 
-Veja [DOCKER_DEPLOY.md](./DOCKER_DEPLOY.md) para guia completo.
+Veja **[DEPLOY_HOJE.md](./DEPLOY_HOJE.md)** para guia completo.
 
-## 📝 Scripts Disponíveis
-
-```bash
-# Desenvolvimento
-pnpm dev                    # Inicia dev server (frontend + backend)
-pnpm dev:client            # Apenas frontend
-pnpm dev:server            # Apenas backend
-
-# Build
-pnpm build                 # Build completo
-pnpm build:client          # Build frontend
-pnpm build:server          # Build backend
-
-# Banco de Dados
-pnpm db:push               # Executar migrations
-pnpm db:studio             # Interface visual do banco
-
-# Testes
-pnpm test                  # Executar todos os testes
-pnpm test:watch            # Testes em modo watch
-
-# Linting
-pnpm lint                  # Verificar código
-pnpm lint:fix              # Corrigir automaticamente
-
-# Type checking
-pnpm type-check            # Verificar tipos TypeScript
-```
-
-## 🧪 Testes
-
-O projeto inclui 28+ testes unitários cobrindo:
-
-- Autenticação e autorização
-- CRUD de imóveis
-- Gestão de leads
-- Webhooks N8N
-- Rotas tRPC
-
-```bash
-# Executar testes
-pnpm test
-
-# Com coverage
-pnpm test:coverage
-
-# Modo watch
-pnpm test:watch
-```
+---
 
 ## 🔐 Segurança
 
@@ -262,40 +288,7 @@ pnpm test:watch
 - ✅ HTTPS em produção
 - ✅ Secrets em variáveis de ambiente
 
-## 🌐 Deploy em Produção
-
-### Opções de Deploy
-
-1. **VPS/Cloud (Recomendado)**
-   - DigitalOcean
-   - AWS EC2
-   - Google Cloud Compute
-   - Azure VM
-
-2. **Platform as a Service**
-   - Railway
-   - Render
-   - Fly.io
-   - Heroku
-
-3. **Containers**
-   - AWS ECS/Fargate
-   - Google Cloud Run
-   - Azure Container Instances
-   - Kubernetes
-
-### Checklist de Deploy
-
-- [ ] Configurar variáveis de ambiente
-- [ ] Gerar JWT_SECRET forte
-- [ ] Configurar banco de dados MySQL
-- [ ] Configurar S3 para uploads
-- [ ] Configurar domínio e DNS
-- [ ] Configurar SSL/HTTPS
-- [ ] Configurar backup automático
-- [ ] Configurar monitoramento
-- [ ] Testar aplicação
-- [ ] Configurar CI/CD
+---
 
 ## 📊 Banco de Dados
 
@@ -303,84 +296,114 @@ pnpm test:watch
 
 - `users` - Usuários e autenticação
 - `properties` - Imóveis cadastrados
+- `property_images` - Imagens dos imóveis
 - `leads` - Leads e clientes
 - `interactions` - Histórico de interações
-- `messages` - Mensagens WhatsApp
+- `message_buffer` - Mensagens WhatsApp
 - `blog_posts` - Artigos do blog
 - `blog_categories` - Categorias do blog
 - `site_settings` - Configurações do site
+- `owners` - Proprietários de imóveis
+- `analytics_events` - Eventos de analytics
 
 ### Migrations
 
 ```bash
-# Criar migration
+# Gerar migration
 pnpm db:generate
 
 # Aplicar migrations
 pnpm db:push
 
-# Rollback (manual)
-# Edite drizzle/migrations e execute novamente
+# Visualizar banco
+pnpm db:studio
 ```
+
+---
 
 ## 🔧 Configuração
 
-### Variáveis de Ambiente Principais
+### Variáveis de Ambiente Essenciais
 
 ```env
-# Banco de Dados
-DATABASE_URL=mysql://user:pass@host:3306/db
+# Banco de Dados PostgreSQL
+DATABASE_URL=postgres://casadf_user:senha@localhost:5432/casadf_db
 
 # Autenticação
-JWT_SECRET=your-secret-key
+JWT_SECRET=your-super-secret-jwt-key
 
 # Manus OAuth
 VITE_APP_ID=your-app-id
-OAUTH_SERVER_URL=https://api.manus.im
+OAUTH_SERVER_URL=https://oauth.manus.im
+OWNER_OPEN_ID=your-owner-open-id
 
-# Storage S3
-AWS_ACCESS_KEY_ID=your-key
-AWS_SECRET_ACCESS_KEY=your-secret
-AWS_REGION=us-east-1
-AWS_S3_BUCKET=your-bucket
+# Aplicação
+NODE_ENV=production
+PORT=3000
+SITE_URL=https://seu-dominio.com
 ```
 
-Veja [ENV_VARIABLES.md](./ENV_VARIABLES.md) para lista completa.
+Veja **[docs/ENV_VARIABLES.md](./docs/ENV_VARIABLES.md)** para lista completa.
+
+---
+
+## 📊 Requisitos do Servidor
+
+### Mínimo
+- **CPU**: 2 cores
+- **RAM**: 2GB
+- **Storage**: 20GB
+- **OS**: Ubuntu 22.04 LTS
+
+### Recomendado
+- **CPU**: 4 cores
+- **RAM**: 4GB
+- **Storage**: 50GB
+- **OS**: Ubuntu 22.04 LTS
+
+---
 
 ## 🤝 Contribuindo
 
 Contribuições são bem-vindas! Por favor:
 
 1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
+2. Crie uma branch para sua feature (`git checkout -b feature/NovaFuncionalidade`)
+3. Commit suas mudanças (`git commit -m 'Adiciona nova funcionalidade'`)
+4. Push para a branch (`git push origin feature/NovaFuncionalidade`)
 5. Abra um Pull Request
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
-## 👤 Autor
-
-**Hernani Muniz**
-- CRECI: 17921-DF
-- Email: ernanisimiao@hotmail.com
-- Telefone: (61) 3254-4464
-- Instagram: [@ernani.nunes](https://instagram.com/ernani.nunes)
-
-## 🆘 Suporte
-
-- **Issues:** https://github.com/seu-usuario/corretordasmansoes/issues
-- **Email:** suporte@corretordasmansoes.com.br
-- **Documentação:** https://docs.corretordasmansoes.com.br
-
-## 📚 Documentação Adicional
-
-- [Guia de Deploy Docker](./DOCKER_DEPLOY.md)
-- [Variáveis de Ambiente](./ENV_VARIABLES.md)
-- [TODO List](./todo.md)
 
 ---
 
-Desenvolvido com ❤️ por [Manus AI](https://manus.im)
+## 📄 Licença
+
+Este projeto está sob a licença MIT.
+
+---
+
+## 🆘 Suporte
+
+- **Issues**: [GitHub Issues](https://github.com/vml-arquivos/casadf-sistema/issues)
+- **Documentação**: Veja a pasta `docs/`
+- **Deploy**: Consulte [DEPLOY_HOJE.md](./DEPLOY_HOJE.md)
+
+---
+
+## 🎯 Roadmap
+
+- [ ] Integração com portais (ZAP, VivaReal, OLX)
+- [ ] App mobile (React Native)
+- [ ] Assinatura eletrônica de contratos
+- [ ] Integração com cartórios
+- [ ] Sistema de comissões
+- [ ] Relatórios avançados
+- [ ] Multi-idioma
+
+---
+
+**Desenvolvido com ❤️ para a CasaDF**
+
+**Versão**: 1.0.0  
+**Última atualização**: 02/12/2025  
+**Stack**: PostgreSQL 16 + Node.js 22 + React 18  
+**Repositório**: https://github.com/vml-arquivos/casadf-sistema

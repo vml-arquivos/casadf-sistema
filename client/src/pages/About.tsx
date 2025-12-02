@@ -54,13 +54,13 @@ export default function About() {
     {
       name: "Maria Silva",
       role: "Empresária",
-      text: "Hernani foi fundamental na compra da minha mansão no Lago Sul. Profissionalismo e atenção aos detalhes impecáveis!",
+      text: "CasaDF foi fundamental na compra da minha mansão no Lago Sul. Profissionalismo e atenção aos detalhes impecáveis!",
       rating: 5,
     },
     {
       name: "Carlos Eduardo",
       role: "Investidor",
-      text: "Vendi minha cobertura em tempo recorde graças ao trabalho excepcional do Hernani. Recomendo sem ressalvas!",
+      text: "Vendi minha cobertura em tempo recorde graças ao trabalho excepcional do CasaDF. Recomendo sem ressalvas!",
       rating: 5,
     },
     {
@@ -74,12 +74,12 @@ export default function About() {
   return (
     <>
       <Helmet>
-        <title>Quem Somos - Hernani Muniz | Corretor de Imóveis de Luxo em Brasília</title>
+        <title>Quem Somos - CasaDF | Consultoria Imobiliária em Brasília</title>
         <meta 
           name="description" 
-          content="Conheça Hernani Muniz, especialista em imóveis de luxo em Brasília com mais de 15 anos de experiência. CRECI-DF, atendimento personalizado e resultados comprovados." 
+          content="Conheça CasaDF, especialista em imóveis de luxo em Brasília com mais de 15 anos de experiência. CRECI-DF, atendimento personalizado e resultados comprovados." 
         />
-        <meta property="og:title" content="Quem Somos - Hernani Muniz | Corretor de Imóveis de Luxo" />
+        <meta property="og:title" content="Quem Somos - CasaDF | Consultoria Imobiliária" />
         <meta property="og:description" content="Mais de 15 anos de experiência no mercado de imóveis de luxo em Brasília. Especialista em Lago Sul, Lago Norte e Park Way." />
         <meta property="og:type" content="website" />
       </Helmet>
@@ -95,7 +95,7 @@ export default function About() {
                 Mais de 15 anos de experiência
               </Badge>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-                Hernani Muniz
+                CasaDF
               </h1>
               <p className="text-xl md:text-2xl text-muted-foreground mb-8">
                 Especialista em Imóveis de Luxo em Brasília
@@ -133,7 +133,7 @@ export default function About() {
               <div>
                 <img
                   src="/ernani-nunes-photo.jpg"
-                  alt="Hernani Muniz - Corretor de Imóveis de Luxo"
+                  alt="CasaDF - Consultoria Imobiliária"
                   className="w-full rounded-2xl shadow-2xl"
                 />
               </div>
@@ -149,7 +149,7 @@ export default function About() {
                     tornaram-no referência em imóveis de luxo na capital federal.
                   </p>
                   <p>
-                    Ao longo de sua carreira, Hernani intermediou a venda de algumas das 
+                    Ao longo de sua carreira, CasaDF intermediou a venda de algumas das 
                     propriedades mais exclusivas de Brasília, incluindo mansões no Lago Sul, 
                     coberturas panorâmicas e fazendas no Park Way. Seu diferencial está no 
                     atendimento personalizado e na capacidade de entender exatamente o que 
@@ -157,7 +157,7 @@ export default function About() {
                   </p>
                   <p>
                     Com formação continuada em negociação imobiliária e marketing digital, 
-                    Hernani combina tradição e inovação para oferecer o melhor serviço aos 
+                    CasaDF combina tradição e inovação para oferecer o melhor serviço aos 
                     seus clientes. Sua abordagem consultiva e transparente conquistou a 
                     confiança de centenas de famílias e investidores.
                   </p>

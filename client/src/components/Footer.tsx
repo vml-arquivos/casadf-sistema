@@ -12,13 +12,10 @@ export default function Footer() {
           {/* Sobre */}
           <div>
             <h3 className="text-xl font-serif font-semibold mb-4 text-primary">
-              Ernani Nunes
+              CasaDF
             </h3>
             <p className="text-background/70 text-sm leading-relaxed mb-4">
-              Consultoria imobiliária de luxo em Brasília. Especializado em imóveis de alto padrão com atendimento personalizado e exclusivo.
-            </p>
-            <p className="text-background/70 text-sm">
-              <strong className="text-background">CRECI:</strong> 17921-DF
+              Consultoria imobiliária em Brasília. Especializado em imóveis residenciais e comerciais com atendimento personalizado e exclusivo.
             </p>
           </div>
 
@@ -160,7 +157,7 @@ export default function Footer() {
         <div className="border-t border-background/10 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-background/60">
             <p>
-              © {currentYear} Ernani Nunes - O Corretor das Mansões. Todos os direitos reservados.
+              © {currentYear} CasaDF - Imóveis em Brasília. Todos os direitos reservados.
             </p>
             <div className="flex gap-6">
               <Link href="/privacidade">
