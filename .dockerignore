@@ -38,7 +38,7 @@ coverage
 __tests__
 __mocks__
 
-# Documentação
+# Documentação (exceto README)
 *.md
 !README.md
 docs
@@ -63,6 +63,4 @@ tmp
 temp
 .cache
 
-# Screenshots e assets de desenvolvimento
-screenshots
-.webp
+# IMPORTANTE: NÃO excluir patches/ pois é necessário para pnpm
