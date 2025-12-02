@@ -97,7 +97,7 @@ export default function BlogPost() {
             <div className="flex items-center gap-6 text-sm text-gray-600 mb-8 pb-8 border-b">
               <span className="flex items-center gap-2">
                 <User className="h-4 w-4" />
-                Ernani Nunes
+                CasaDF
               </span>
               <span className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />

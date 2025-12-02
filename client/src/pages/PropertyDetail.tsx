@@ -126,7 +126,7 @@ export default function PropertyDetail() {
     .join(', ');
 
   // SEO Meta Tags
-  const seoTitle = `${property.title} - Ernani Nunes Corretor`;
+  const seoTitle = `${property.title} - CasaDF Consultoria`;
   const seoDescription = property.description?.substring(0, 160) || `${property.propertyType} para ${property.transactionType} em ${property.neighborhood}, ${property.city}. ${price}.`;
   const seoImage = property.mainImage || allImages[0] || 'https://placehold.co/1200x630';
   const seoUrl = `${import.meta.env.VITE_SITE_URL || window.location.origin}/imovel/${property.id}`;
@@ -435,9 +435,9 @@ export default function PropertyDetail() {
                         <Phone className="h-5 w-5" />
                         <span>(61) 3254-4464</span>
                       </a>
-                      <a href="mailto:ernanisimiao@hotmail.com" className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
+                      <a href="mailto:contato@casadf.com.br" className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
                         <Mail className="h-5 w-5" />
-                        <span>ernanisimiao@hotmail.com</span>
+                        <span>contato@casadf.com.br</span>
                       </a>
                       <a href="https://wa.me/5561999999999" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-green-600 hover:text-green-700 transition-colors">
                         <MessageSquare className="h-5 w-5" />

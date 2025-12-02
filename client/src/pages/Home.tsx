@@ -516,12 +516,12 @@ export default function Home() {
       {/* Avaliações de Clientes */}
       <ReviewsSection />
 
-      {/* Sobre o Corretor */}
+      {/* Sobre a CasaDF */}
       <section className="py-20 bg-muted/30">
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-serif font-bold mb-6">Ernani Nunes</h2>
+              <h2 className="text-4xl font-serif font-bold mb-6">CasaDF</h2>
               <p className="text-lg text-muted-foreground mb-6">
                 Consultoria imobiliária de luxo em Brasília. Especializado em imóveis de alto padrão com atendimento personalizado e exclusivo.
               </p>
@@ -538,7 +538,7 @@ export default function Home() {
             <div className="relative h-96 lg:h-full min-h-[400px] rounded-lg overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5" />
               <img
-                src="/ernani-nunes-photo.jpg"
+                src="/casadf-team.jpg"
                 alt="CasaDF - Imóveis em Brasília"
                 className="w-full h-full object-cover"
               />

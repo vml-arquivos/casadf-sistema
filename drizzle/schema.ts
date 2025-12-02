@@ -271,7 +271,7 @@ export const siteSettings = pgTable("site_settings", {
   companyDescription: text("company_description"),
   companyLogo: varchar("company_logo", { length: 500 }),
   
-  // Informações do corretor
+  // Informações do imóvel
   realtorName: varchar("realtor_name", { length: 255 }),
   realtorBio: text("realtor_bio"),
   realtorCreci: varchar("realtor_creci", { length: 50 }),

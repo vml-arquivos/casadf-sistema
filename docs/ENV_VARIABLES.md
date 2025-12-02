@@ -1,6 +1,6 @@
 # Variáveis de Ambiente
 
-Este documento lista todas as variáveis de ambiente necessárias para o projeto **Corretor das Mansões**.
+Este documento lista todas as variáveis de ambiente necessárias para o projeto **CasaDF**.
 
 ## 📋 Variáveis Obrigatórias
 
@@ -10,9 +10,9 @@ Este documento lista todas as variáveis de ambiente necessárias para o projeto
 |----------|-----------|---------|
 | `DATABASE_URL` | URL de conexão MySQL completa | `mysql://user:pass@host:3306/db` |
 | `MYSQL_ROOT_PASSWORD` | Senha do root MySQL (Docker) | `rootpassword` |
-| `MYSQL_DATABASE` | Nome do banco de dados | `corretordasmansoes` |
-| `MYSQL_USER` | Usuário do banco | `corretor` |
-| `MYSQL_PASSWORD` | Senha do usuário | `corretorpassword` |
+| `MYSQL_DATABASE` | Nome do banco de dados | `casadf` |
+| `MYSQL_USER` | Usuário do banco | `casadf_user` |
+| `MYSQL_PASSWORD` | Senha do usuário | `casadf_password` |
 | `MYSQL_PORT` | Porta do MySQL | `3306` |
 
 ### Aplicação
@@ -42,7 +42,7 @@ Este documento lista todas as variáveis de ambiente necessárias para o projeto
 | Variável | Descrição | Exemplo |
 |----------|-----------|---------|
 | `OWNER_OPEN_ID` | OpenID do proprietário | Fornecido pela Manus |
-| `OWNER_NAME` | Nome do proprietário | `Hernani Muniz` |
+| `OWNER_NAME` | Nome do proprietário | `CasaDF` |
 
 ### Manus Forge API (Backend)
 
@@ -69,7 +69,7 @@ Este documento lista todas as variáveis de ambiente necessárias para o projeto
 
 | Variável | Descrição | Exemplo |
 |----------|-----------|---------|
-| `VITE_APP_TITLE` | Título da aplicação | `Corretor das Mansões - Hernani Muniz` |
+| `VITE_APP_TITLE` | Título da aplicação | `CasaDF - CasaDF` |
 | `VITE_APP_LOGO` | URL do logo | `https://example.com/logo.png` |
 
 ## 📋 Variáveis Opcionais

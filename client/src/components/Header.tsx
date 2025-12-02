@@ -25,9 +25,9 @@ export default function Header() {
                 <Phone className="h-3.5 w-3.5" />
                 <span>(61) 3254-4464</span>
               </a>
-              <a href="mailto:ernanisimiao@hotmail.com" className="flex items-center gap-2 hover:text-primary transition-colors">
+              <a href="mailto:contato@casadf.com.br" className="flex items-center gap-2 hover:text-primary transition-colors">
                 <Mail className="h-3.5 w-3.5" />
-                <span>ernanisimiao@hotmail.com</span>
+                <span>contato@casadf.com.br</span>
               </a>
             </div>
             <div className="flex items-center gap-4">

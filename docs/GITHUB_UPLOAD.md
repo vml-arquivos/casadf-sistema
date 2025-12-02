@@ -1,6 +1,6 @@
 # 📤 Guia Completo de Upload para GitHub
 
-Este guia fornece instruções passo a passo para fazer upload do projeto **Corretor das Mansões** para o GitHub.
+Este guia fornece instruções passo a passo para fazer upload do projeto **CasaDF** para o GitHub.
 
 ---
 
@@ -20,8 +20,8 @@ Antes de começar, certifique-se de ter:
 2. Clique no botão **"+"** no canto superior direito
 3. Selecione **"New repository"**
 4. Preencha os dados:
-   - **Repository name:** `corretordasmansoes`
-   - **Description:** "Site profissional de imóveis de luxo em Brasília - Hernani Muniz"
+   - **Repository name:** `casadf`
+   - **Description:** "Site profissional de imóveis de luxo em Brasília - CasaDF"
    - **Visibility:** Escolha **Private** (recomendado) ou **Public**
    - ⚠️ **NÃO** marque "Initialize this repository with a README"
 5. Clique em **"Create repository"**
@@ -34,8 +34,8 @@ Antes de começar, certifique-se de ter:
 
 ```bash
 # Extrair o ZIP baixado do Manus
-unzip corretordasmansoes.zip
-cd corretordasmansoes
+unzip casadf.zip
+cd casadf
 ```
 
 ### 2.2. Verificar Estrutura
@@ -43,7 +43,7 @@ cd corretordasmansoes
 Certifique-se de que a estrutura está correta:
 
 ```
-corretordasmansoes/
+casadf/
 ├── client/                 # Frontend React
 │   ├── src/
 │   │   ├── pages/         # Páginas públicas e admin
@@ -71,7 +71,7 @@ corretordasmansoes/
 
 ```bash
 # Navegar até a pasta do projeto
-cd corretordasmansoes
+cd casadf
 
 # Inicializar repositório Git
 git init
@@ -87,7 +87,7 @@ git commit -m "Initial commit: Sistema completo de imóveis de luxo"
 
 ```bash
 # Substituir SEU_USUARIO pelo seu username do GitHub
-git remote add origin https://github.com/SEU_USUARIO/corretordasmansoes.git
+git remote add origin https://github.com/SEU_USUARIO/casadf.git
 
 # Verificar se foi adicionado corretamente
 git remote -v
@@ -171,7 +171,7 @@ Após o código estar no GitHub, você pode fazer deploy em:
 
 1. Acesse [vercel.com](https://vercel.com)
 2. Clique em **"Import Project"**
-3. Selecione seu repositório `corretordasmansoes`
+3. Selecione seu repositório `casadf`
 4. Configure as variáveis de ambiente
 5. Clique em **"Deploy"**
 
@@ -179,7 +179,7 @@ Após o código estar no GitHub, você pode fazer deploy em:
 
 1. Acesse [railway.app](https://railway.app)
 2. Clique em **"New Project"** → **"Deploy from GitHub repo"**
-3. Selecione `corretordasmansoes`
+3. Selecione `casadf`
 4. Adicione banco MySQL no mesmo projeto
 5. Configure variáveis de ambiente
 6. Deploy automático!
@@ -206,7 +206,7 @@ git config --global user.email "seu@email.com"
 **Solução:** Você não está na pasta correta. Navegue até a pasta do projeto:
 
 ```bash
-cd /caminho/para/corretordasmansoes
+cd /caminho/para/casadf
 ```
 
 ### Erro: "! [rejected] main -> main (fetch first)"
@@ -248,7 +248,7 @@ Antes de considerar o upload completo, verifique:
 Seu projeto está agora no GitHub e pronto para ser compartilhado, versionado e deployado!
 
 **Próximos passos:**
-1. Configurar domínio personalizado (ex: `corretordasmansoes.com.br`)
+1. Configurar domínio personalizado (ex: `casadf.com.br`)
 2. Configurar Google Analytics e Meta Pixel
 3. Criar página "Quem Somos" com conteúdo real
 4. Adicionar imóveis reais ao banco de dados

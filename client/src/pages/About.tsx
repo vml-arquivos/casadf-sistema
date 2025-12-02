@@ -102,7 +102,7 @@ export default function About() {
               </p>
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
                 Mais de uma década dedicada a conectar pessoas aos imóveis dos seus sonhos. 
-                Especializado em mansões, coberturas e propriedades exclusivas nos bairros mais 
+                Especializado em imóveis, coberturas e propriedades exclusivas nos bairros mais 
                 nobres de Brasília.
               </p>
             </div>
@@ -132,7 +132,7 @@ export default function About() {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <img
-                  src="/ernani-nunes-photo.jpg"
+                  src="/casadf-team.jpg"
                   alt="CasaDF - Consultoria Imobiliária"
                   className="w-full rounded-2xl shadow-2xl"
                 />
@@ -150,7 +150,7 @@ export default function About() {
                   </p>
                   <p>
                     Ao longo de sua carreira, CasaDF intermediou a venda de algumas das 
-                    propriedades mais exclusivas de Brasília, incluindo mansões no Lago Sul, 
+                    propriedades mais exclusivas de Brasília, incluindo imóveis no Lago Sul, 
                     coberturas panorâmicas e fazendas no Park Way. Seu diferencial está no 
                     atendimento personalizado e na capacidade de entender exatamente o que 
                     cada cliente busca.
@@ -279,8 +279,8 @@ export default function About() {
                   <Mail className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
                   <div>
                     <div className="font-semibold mb-1">Email</div>
-                    <a href="mailto:ernaniSimiao@hotmail.com" className="text-muted-foreground hover:text-primary">
-                      ernaniSimiao@hotmail.com
+                    <a href="mailto:contato@casadf.com.br" className="text-muted-foreground hover:text-primary">
+                      contato@casadf.com.br
                     </a>
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-# 🐳 Deploy com Docker - Corretor das Mansões
+# 🐳 Deploy com Docker - CasaDF
 
 Guia completo para fazer deploy da aplicação usando Docker e Docker Compose.
 
@@ -38,8 +38,8 @@ sudo chmod +x /usr/local/bin/docker-compose
 ### 1. Clone o Repositório
 
 ```bash
-git clone https://github.com/seu-usuario/corretordasmansoes.git
-cd corretordasmansoes
+git clone https://github.com/seu-usuario/casadf.git
+cd casadf
 ```
 
 ### 2. Configure as Variáveis de Ambiente
@@ -137,13 +137,13 @@ docker-compose build app
 docker-compose exec app pnpm db:push
 
 # Backup do banco
-docker-compose exec db mysqldump -u corretor -p corretordasmansoes > backup.sql
+docker-compose exec db mysqldump -u casadf_user -p casadf > backup.sql
 
 # Restaurar backup
-docker-compose exec -T db mysql -u corretor -p corretordasmansoes < backup.sql
+docker-compose exec -T db mysql -u casadf_user -p casadf < backup.sql
 
 # Acessar MySQL CLI
-docker-compose exec db mysql -u corretor -p
+docker-compose exec db mysql -u casadf_user -p
 ```
 
 ### Limpeza
@@ -224,8 +224,8 @@ ssh user@seu-servidor.com
 
 2. **Clone e configure:**
 ```bash
-git clone https://github.com/seu-usuario/corretordasmansoes.git
-cd corretordasmansoes
+git clone https://github.com/seu-usuario/casadf.git
+cd casadf
 cp .env.example .env
 nano .env  # Configure variáveis
 ```
@@ -239,7 +239,7 @@ nano .env  # Configure variáveis
 ```nginx
 server {
     listen 80;
-    server_name corretordasmansoes.com.br;
+    server_name casadf.com.br;
 
     location / {
         proxy_pass http://localhost:3000;
@@ -255,7 +255,7 @@ server {
 5. **Configure SSL (Let's Encrypt):**
 ```bash
 sudo apt install certbot python3-certbot-nginx
-sudo certbot --nginx -d corretordasmansoes.com.br
+sudo certbot --nginx -d casadf.com.br
 ```
 
 ### AWS ECS
@@ -263,9 +263,9 @@ sudo certbot --nginx -d corretordasmansoes.com.br
 1. **Build e push para ECR:**
 ```bash
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account-id>.dkr.ecr.us-east-1.amazonaws.com
-docker build -t corretordasmansoes .
-docker tag corretordasmansoes:latest <account-id>.dkr.ecr.us-east-1.amazonaws.com/corretordasmansoes:latest
-docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/corretordasmansoes:latest
+docker build -t casadf .
+docker tag casadf:latest <account-id>.dkr.ecr.us-east-1.amazonaws.com/casadf:latest
+docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/casadf:latest
 ```
 
 2. **Crie task definition e service no ECS**
@@ -274,9 +274,9 @@ docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/corretordasmansoes:late
 
 ```bash
 # Build e deploy
-gcloud builds submit --tag gcr.io/PROJECT-ID/corretordasmansoes
-gcloud run deploy corretordasmansoes \
-  --image gcr.io/PROJECT-ID/corretordasmansoes \
+gcloud builds submit --tag gcr.io/PROJECT-ID/casadf
+gcloud run deploy casadf \
+  --image gcr.io/PROJECT-ID/casadf \
   --platform managed \
   --region us-central1 \
   --allow-unauthenticated
@@ -286,14 +286,14 @@ gcloud run deploy corretordasmansoes \
 
 ```bash
 # Build e push
-az acr build --registry <registry-name> --image corretordasmansoes .
+az acr build --registry <registry-name> --image casadf .
 
 # Deploy
 az container create \
   --resource-group myResourceGroup \
-  --name corretordasmansoes \
-  --image <registry-name>.azurecr.io/corretordasmansoes \
-  --dns-name-label corretordasmansoes \
+  --name casadf \
+  --image <registry-name>.azurecr.io/casadf \
+  --dns-name-label casadf \
   --ports 3000
 ```
 
@@ -388,6 +388,6 @@ docker-compose up -d --build
 
 ## 🆘 Suporte
 
-- **Issues:** https://github.com/seu-usuario/corretordasmansoes/issues
-- **Email:** suporte@corretordasmansoes.com.br
-- **Documentação:** https://docs.corretordasmansoes.com.br
+- **Issues:** https://github.com/seu-usuario/casadf/issues
+- **Email:** suporte@casadf.com.br
+- **Documentação:** https://docs.casadf.com.br

@@ -1,4 +1,4 @@
-# Guia de Deploy - Corretor das Mansões
+# Guia de Deploy - CasaDF
 
 Este guia detalha como fazer deploy do projeto em diferentes plataformas.
 
@@ -23,7 +23,7 @@ Vercel é ideal para aplicações Next.js/React com backend serverless.
 
 2. **Importe o projeto**
    - Clique em "New Project"
-   - Selecione o repositório `corretordasmansoes`
+   - Selecione o repositório `casadf`
    - Vercel detectará automaticamente que é um projeto Vite
 
 3. **Configure Build Settings**
@@ -54,7 +54,7 @@ Vercel é ideal para aplicações Next.js/React com backend serverless.
 ### Configurar Domínio Personalizado
 
 1. No painel da Vercel, vá em "Settings" → "Domains"
-2. Adicione seu domínio (ex: `corretordasmansoes.com.br`)
+2. Adicione seu domínio (ex: `casadf.com.br`)
 3. Configure os DNS conforme instruções da Vercel
 4. Aguarde propagação (até 48h)
 
@@ -78,7 +78,7 @@ Railway é ideal para aplicações fullstack com banco de dados.
 2. **Crie um novo projeto**
    - Clique em "New Project"
    - Selecione "Deploy from GitHub repo"
-   - Escolha o repositório `corretordasmansoes`
+   - Escolha o repositório `casadf`
 
 3. **Adicione MySQL Database**
    - No projeto, clique em "New"
@@ -174,7 +174,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DATABASE_URL=mysql://root:password@db:3306/corretordasmansoes
+      - DATABASE_URL=mysql://root:password@db:3306/casadf
       - JWT_SECRET=${JWT_SECRET}
       - NODE_ENV=production
     depends_on:
@@ -185,7 +185,7 @@ services:
     image: mysql:8
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=corretordasmansoes
+      - MYSQL_DATABASE=casadf
     volumes:
       - mysql_data:/var/lib/mysql
     restart: unless-stopped
@@ -258,9 +258,9 @@ Para controle total do servidor.
    sudo mysql -u root -p
    ```
    ```sql
-   CREATE DATABASE corretordasmansoes;
+   CREATE DATABASE casadf;
    CREATE USER 'appuser'@'localhost' IDENTIFIED BY 'senha-segura';
-   GRANT ALL PRIVILEGES ON corretordasmansoes.* TO 'appuser'@'localhost';
+   GRANT ALL PRIVILEGES ON casadf.* TO 'appuser'@'localhost';
    FLUSH PRIVILEGES;
    EXIT;
    ```
@@ -272,8 +272,8 @@ Para controle total do servidor.
    sudo su - appuser
 
    # Clonar repositório
-   git clone https://github.com/seu-usuario/corretordasmansoes.git
-   cd corretordasmansoes
+   git clone https://github.com/seu-usuario/casadf.git
+   cd casadf
 
    # Instalar dependências
    pnpm install
@@ -292,25 +292,25 @@ Para controle total do servidor.
 5. **Configurar PM2**
    ```bash
    # Iniciar aplicação
-   pm2 start npm --name "corretordasmansoes" -- start
+   pm2 start npm --name "casadf" -- start
 
    # Configurar auto-start
    pm2 startup
    pm2 save
 
    # Ver logs
-   pm2 logs corretordasmansoes
+   pm2 logs casadf
    ```
 
 6. **Configurar Nginx**
    ```bash
-   sudo nano /etc/nginx/sites-available/corretordasmansoes
+   sudo nano /etc/nginx/sites-available/casadf
    ```
 
    ```nginx
    server {
        listen 80;
-       server_name corretordasmansoes.com.br www.corretordasmansoes.com.br;
+       server_name casadf.com.br www.casadf.com.br;
 
        location / {
            proxy_pass http://localhost:3000;
@@ -328,7 +328,7 @@ Para controle total do servidor.
 
    ```bash
    # Ativar site
-   sudo ln -s /etc/nginx/sites-available/corretordasmansoes /etc/nginx/sites-enabled/
+   sudo ln -s /etc/nginx/sites-available/casadf /etc/nginx/sites-enabled/
    sudo nginx -t
    sudo systemctl restart nginx
    ```
@@ -339,7 +339,7 @@ Para controle total do servidor.
    sudo apt install -y certbot python3-certbot-nginx
 
    # Obter certificado
-   sudo certbot --nginx -d corretordasmansoes.com.br -d www.corretordasmansoes.com.br
+   sudo certbot --nginx -d casadf.com.br -d www.casadf.com.br
 
    # Renovação automática já configurada
    ```
@@ -454,7 +454,7 @@ pnpm build
 
 Problemas com deploy?
 
-- 📧 Email: ernaniSimiao@hotmail.com
+- 📧 Email: contato@casadf.com.br
 - 📱 WhatsApp: (61) 3254-4464
 - 📚 Documentação: [API_DOCUMENTATION.md](./API_DOCUMENTATION.md)
 

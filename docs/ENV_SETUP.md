@@ -89,7 +89,7 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=seu-email@gmail.com
 SMTP_PASSWORD=sua-senha-app
-SMTP_FROM=Corretor das Mansões <contato@corretordasmansoes.com>
+SMTP_FROM=CasaDF <contato@casadf.com>
 ```
 
 **Nota para Gmail**: Use uma "App Password" em vez da senha normal.
@@ -183,7 +183,7 @@ Para rodar o projeto localmente sem a plataforma Manus:
 2. Configure pelo menos as variáveis obrigatórias:
 
 ```env
-DATABASE_URL=mysql://root:password@localhost:3306/corretordasmansoes
+DATABASE_URL=mysql://root:password@localhost:3306/casadf
 JWT_SECRET=seu-jwt-secret-local
 NODE_ENV=development
 PORT=3000
@@ -221,5 +221,5 @@ Sempre use variáveis de ambiente para informações sensíveis como:
 
 Para dúvidas sobre configuração:
 - Documentação Manus: https://docs.manus.im
-- Email: ernaniSimiao@hotmail.com
+- Email: contato@casadf.com.br
 - WhatsApp: (61) 3254-4464

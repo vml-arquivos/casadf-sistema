@@ -67,7 +67,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <Link href="/">
               <div className="flex flex-col cursor-pointer">
                 <span className="text-xl font-serif font-bold text-foreground">
-                  ERNANI NUNES
+                  CASADF
                 </span>
                 <span className="text-xs text-primary tracking-wider">
                   ADMIN PANEL
