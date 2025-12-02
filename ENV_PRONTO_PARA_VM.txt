@@ -1,0 +1,96 @@
+# ============================================
+# CONFIGURAÇÕES DO BANCO DE DADOS (PostgreSQL)
+# ============================================
+DATABASE_URL=postgres://casadf_user:CasaDF_User_2024_Secure!@#$@db:5432/casadf_db
+PGUSER=casadf_user
+PGPASSWORD=CasaDF_User_2024_Secure!@#$
+PGDATABASE=casadf_db
+PGHOST=db
+PGPORT=5432
+
+# ============================================
+# CONFIGURAÇÕES DA APLICAÇÃO
+# ============================================
+NODE_ENV=production
+PORT=3000
+SITE_URL=http://34.39.247.210:3000
+VITE_API_URL=http://34.39.247.210:3000/api
+
+# ============================================
+# AUTENTICAÇÃO E SEGURANÇA
+# ============================================
+# IMPORTANTE: Gere um JWT_SECRET seguro com: openssl rand -base64 64
+JWT_SECRET=COLE_AQUI_O_RESULTADO_DO_OPENSSL_RAND_BASE64_64
+
+# ============================================
+# OAUTH MANUS (Sistema de Autenticação)
+# ============================================
+VITE_APP_ID=seu-manus-app-id-aqui
+OAUTH_SERVER_URL=https://oauth.manus.im
+VITE_OAUTH_PORTAL_URL=https://oauth.manus.im
+
+# ============================================
+# INFORMAÇÕES DO PROPRIETÁRIO
+# ============================================
+OWNER_OPEN_ID=seu-owner-open-id-aqui
+OWNER_NAME=CasaDF
+
+# ============================================
+# MANUS FORGE API (Backend)
+# ============================================
+BUILT_IN_FORGE_API_URL=https://api.manus.im
+BUILT_IN_FORGE_API_KEY=sua-backend-forge-api-key-aqui
+
+# ============================================
+# MANUS FORGE API (Frontend)
+# ============================================
+VITE_FRONTEND_FORGE_API_URL=https://api.manus.im
+VITE_FRONTEND_FORGE_API_KEY=sua-frontend-forge-api-key-aqui
+
+# ============================================
+# ANALYTICS
+# ============================================
+VITE_ANALYTICS_ENDPOINT=
+VITE_ANALYTICS_WEBSITE_ID=
+
+# ============================================
+# INFORMAÇÕES DO SITE
+# ============================================
+VITE_APP_TITLE=CasaDF - Imóveis em Brasília
+VITE_APP_LOGO=/logo.png
+
+# ============================================
+# INTEGRAÇÃO COM IA (OPCIONAL)
+# ============================================
+GOOGLE_GEMINI_API_KEY=
+MANUS_API_KEY=
+
+# ============================================
+# INTEGRAÇÃO N8N (OPCIONAL)
+# ============================================
+N8N_WEBHOOK_URL=
+
+# ============================================
+# DOCKER COMPOSE
+# ============================================
+APP_PORT=3000
+PGADMIN_PORT=8080
+PGADMIN_EMAIL=admin@casadf.local
+PGADMIN_PASSWORD=admin
+
+# ============================================
+# STORAGE E UPLOADS (AWS S3 ou compatível) - OPCIONAL
+# ============================================
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_REGION=us-east-1
+AWS_S3_BUCKET=
+AWS_S3_ENDPOINT=
+
+# ============================================
+# INTEGRAÇÕES EXTERNAS (OPCIONAL)
+# ============================================
+CHATWOOT_URL=
+CHATWOOT_API_KEY=
+GOOGLE_ANALYTICS_ID=
+FACEBOOK_PIXEL_ID=
